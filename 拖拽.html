@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#box{
+				width:200px;
+				height:200px;
+				background:pink;
+				position:absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"><a href="" id="hr">更广泛的大大方方</a></div>
+	</body>
+</html>
+<script>
+	
+	var oDiv = document.getElementById("box");
+	var oHr = document.getElementById("hr");
+	var positionArr=[];
+	oDiv.onmousedown=function(e){
+		var e = e || event;
+		var disx = e.offsetX || e.layerX;
+		var disy = e.offsetY || e.layerY;
+		document.onmousemove=function(e){
+			var e = e || event;
+			var x = e.pageX-disx;
+			var y = e.pageY-disy;
+			oDiv.style.left = x + "px";
+			oDiv.style.top = y + "px";
+			positionArr.push({"left":oDiv.style.left,"top":oDiv.style.top});
+			
+		}
+		document.onmouseup = function(e){
+			var e = e || event;
+			document.onmousemove = null;
+			console.log( positionArr );
+			
+			
+		}
+		return false;
+		}
+    
+		oHr.onclick=function(){
+			var index = positionArr.length-1;
+			var timer = setInterval(function(){
+				oDiv.style.left=positionArr[index].left;
+				oDiv.style.top=positionArr[index].top;
+				index--;
+				if( index == -1 ){
+    			clearInterval( timer );
+    			positionArr = [];
+    		}
+				
+			},30)
+		}
+		
+		
+	
+
+//
+//	var oDiv=document.getElementById("box");
+//	oDiv.onmousedown = function(e){
+//		var e = e || event;
+//		var disx = e.offsetX || e.layerX;//鼠标按下时的内部偏移量
+//		var disy = e.offsetY || E.layerY;
+//		document.onmousemove = function(e){
+//			var e = e || event;
+//			var x = e.pageX - disx;//被拖拽物体的left值和top值；
+//			var y = e.pageY - disy;
+//			oDiv.style.left = x + "px";//被拖拽物体的left值和top值
+//			oDiv.style.top = y + "px";
+//		
+//		}
+//		document.onmouseup = function(e){//鼠标抬起的时候
+//			var e = e || event;
+//			document.onmousemove = null;//取消鼠标移动事件
+//		}
+//		return false;//阻止浏览器的默认行为
+//	}
+</script>
